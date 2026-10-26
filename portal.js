@@ -46,6 +46,7 @@ async function load(){
   token=(await response.json()).token;sessionStorage.setItem(storageKey,token);
  }
  if(!token){try{registrationEnabled=(await jsonApi('/api/portal/options')).emailRegistration;}catch{}loginForm();return;}
+ if(mode==='admin'){const me=await api('/api/me');if(!me.ok||(await me.json()).role!=='admin'){sessionStorage.removeItem(storageKey);token='';loginForm();return;}}
  if(new URLSearchParams(location.search).get('panel')==='accounts'){await manageAccounts();return;}
  status.textContent='正在连接库管系统…';
  const response=await api('/api/frontend');
