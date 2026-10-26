@@ -5,7 +5,7 @@ let token=sessionStorage.getItem(storageKey)||'';
 const error=document.querySelector('#error'),status=document.querySelector('#status');
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const panel=document.querySelector('#login-panel');
-let mode=new URLSearchParams(location.search).get('login')==='admin'?'admin':'employee',registrationEnabled=false,feishuRegistrationEnabled=false;
+let mode=(new URLSearchParams(location.search).get('login')==='admin'||new URLSearchParams(location.search).get('panel')==='accounts')?'admin':'employee',registrationEnabled=false,feishuRegistrationEnabled=false;
 function showError(e){const target=document.querySelector('#error');if(target)target.textContent=e.message||'连接失败，请确认本机服务已启动';}
 async function jsonApi(path,input){const response=await api(path,input===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(input)});let value;try{value=await response.json();}catch{throw Error('后台暂不可用，请确认本机服务和公网连接已启动');}if(!response.ok){const e=Error(value.error||'请求失败');e.code=value.code;throw e;}return value;}
 function loginForm(change=false){
