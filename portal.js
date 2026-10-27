@@ -1,5 +1,5 @@
 // Only this loader is hosted on GitHub. Authenticated UI and records stay on the local server.
-const backend='https://cortex-quartet-armless.ngrok-free.dev';
+const backend='https://ace-inventory-janghuimuk.cpolar.cn';
 const nativeFetch=window.fetch.bind(window),storageKey='ace-web-session-v1',verifierKey='ace-web-verifier-v1';
 let token=sessionStorage.getItem(storageKey)||'';
 const error=document.querySelector('#error'),status=document.querySelector('#status');
@@ -55,7 +55,7 @@ async function manageAccounts(){
  document.querySelectorAll('[data-action]').forEach(button=>button.onclick=()=>void change({id:button.dataset.id,action:button.dataset.action}));
 }
 async function api(path,options={}){
- const headers=new Headers(options.headers);headers.set('ngrok-skip-browser-warning','1');
+ const headers=new Headers(options.headers);
  if(token)headers.set('Authorization','Bearer '+token);
  return nativeFetch(backend+path,{...options,headers,credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer'});
 }
