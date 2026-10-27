@@ -57,7 +57,7 @@ async function manageAccounts(){
 async function api(path,options={}){
  const headers=new Headers(options.headers);
  if(token)headers.set('Authorization','Bearer '+token);
- return nativeFetch(backend+path,{...options,headers,credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer'});
+ try{return await nativeFetch(backend+path,{...options,headers,credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer'});}catch(error){if(error instanceof TypeError)throw Error('无法连接 cpolar 后台，请确认隧道窗口仍在运行，并按 Ctrl+Shift+R 强制刷新后重试。');throw error;}
 }
 async function load(){
  const ticket=new URLSearchParams(location.hash.slice(1)).get('login_ticket');
